@@ -1,8 +1,9 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Browser
-import Html exposing (Html, text, div, h1, img)
+import Html exposing (Html, div, h1, img, text)
 import Html.Attributes exposing (src)
+
 
 
 ---- MODEL ----
@@ -12,9 +13,9 @@ type alias Model =
     {}
 
 
-init : ( Model, Cmd Msg )
+init : Model
 init =
-    ( {}, Cmd.none )
+    {}
 
 
 
@@ -25,9 +26,9 @@ type Msg
     = NoOp
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> Model
 update msg model =
-    ( model, Cmd.none )
+    model
 
 
 
@@ -48,9 +49,8 @@ view model =
 
 main : Program () Model Msg
 main =
-    Browser.element
+    Browser.sandbox
         { view = view
-        , init = \_ -> init
+        , init = init
         , update = update
-        , subscriptions = always Sub.none
         }
