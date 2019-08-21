@@ -180,11 +180,16 @@ labeledInput input_ id_ labelText inputAttrs =
     ]
 
 
+typedInput : String -> Input msg
+typedInput typeName attrs =
+    input (type_ typeName :: attrs) []
+
+
 numberInput : Input msg
-numberInput attrs =
-    input (type_ "number" :: attrs) []
+numberInput =
+    typedInput "number"
 
 
 checkbox : Input msg
-checkbox attrs =
-    input (type_ "checkbox" :: attrs) []
+checkbox =
+    typedInput "checkbox"
