@@ -6,6 +6,19 @@ import Html.Attributes exposing (src)
 
 
 
+---- PROGRAM ----
+
+
+main : Program () Model Msg
+main =
+    Browser.sandbox
+        { view = view
+        , init = init
+        , update = update
+        }
+
+
+
 ---- MODEL ----
 
 
@@ -41,16 +54,3 @@ view model =
         [ img [ src "/logo.svg" ] []
         , h1 [] [ text "Your Elm App is working!" ]
         ]
-
-
-
----- PROGRAM ----
-
-
-main : Program () Model Msg
-main =
-    Browser.sandbox
-        { view = view
-        , init = init
-        , update = update
-        }
