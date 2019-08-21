@@ -24,3 +24,19 @@ img {
   margin: 20px 0;
   max-width: 200px;
 }
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-content: center;
+    grid-gap: 1.5ex .5em;
+}
+
+.grid label {
+    text-align: right;
+}
