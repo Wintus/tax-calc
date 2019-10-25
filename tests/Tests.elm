@@ -1,7 +1,8 @@
 module Tests exposing (..)
 
-import Expect
+import Expect exposing (FloatingPointTolerance(..))
 import Fuzz exposing (string)
+import Main exposing (parseFloat)
 import Test exposing (..)
 
 
@@ -32,5 +33,10 @@ suite =
                         |> String.reverse
                         |> String.reverse
                         |> Expect.equal randomlyGeneratedString
+            , test "parse 1.23" <|
+                \_ ->
+                    "1.23"
+                        |> parseFloat
+                        |> Expect.within (Absolute 0.0001) 1.23
             ]
         ]
