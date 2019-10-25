@@ -1,7 +1,6 @@
 module Tests exposing (..)
 
 import Expect exposing (FloatingPointTolerance(..))
-import Fuzz exposing (string)
 import Main exposing (parseFloat, truncateFloat)
 import Test exposing (..)
 
