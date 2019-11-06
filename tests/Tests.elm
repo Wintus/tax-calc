@@ -1,6 +1,7 @@
 module Tests exposing (..)
 
 import Expect exposing (FloatingPointTolerance(..))
+import Fuzz exposing (float)
 import Main exposing (parseFloat, truncateFloat, updateTaxExcludedPrice, updateTaxIncludedPrice, updateTaxRate, updateTruncation)
 import Test exposing (..)
 
@@ -121,6 +122,24 @@ suite =
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1234
             , todo "fuzz unit price"
+            , fuzz float "truncate twice is idempotent" <|
+                \n ->
+                    let
+                        f =
+                            truncateFloat n
+
+                        model =
+                            { taxRate = 0
+                            , taxExcludedPrice = f
+                            , taxIncludedPrice = f
+                            , tax = 0
+                            , truncated = True
+                            }
+                    in
+                    model
+                        |> updateTruncation False
+                        |> updateTruncation True
+                        |> Expect.equal model
             ]
         , describe "not-truncated"
             [ todo "tax-excluded"
