@@ -47,7 +47,8 @@ init =
 
 
 type Msg
-    = ChangeTaxExcludedPrice String
+    = ChangeTaxRate String
+    | ChangeTaxExcludedPrice String
     | ChangeTaxIncludedPrice String
     | ChangeTruncated Bool
 
@@ -63,6 +64,14 @@ update msg model =
                 identity
     in
     case msg of
+        ChangeTaxRate s ->
+            let
+                -- no truncate
+                rate =
+                    s |> parseFloat
+            in
+            updateTaxRate rate model
+
         ChangeTaxExcludedPrice s ->
             let
                 price =
@@ -195,7 +204,8 @@ view model =
                         "tax-rate"
                         "税率"
                         [ value <| String.fromFloat model.taxRate
-                        , disabled True
+                        , step (String.fromFloat 0.01)
+                        , onInput ChangeTaxRate
                         ]
                     , labeledNumberInput
                         "price-before-tax"
