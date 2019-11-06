@@ -149,8 +149,9 @@ updateTaxRate taxRate model =
             price * taxRate
     in
     { model
-        | taxIncludedPrice = price + tax |> float
+        | taxRate = taxRate
         , tax = tax
+        , taxIncludedPrice = price + tax |> float
     }
 
 

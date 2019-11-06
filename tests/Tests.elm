@@ -65,6 +65,17 @@ suite =
                         |> updateTaxIncludedPrice 1234
                         |> .tax
                         |> Expect.within (Absolute 0.01) 91.41
+            , test "tax rate -> 10%" <|
+                \_ ->
+                    { taxRate = 0
+                    , taxExcludedPrice = 1234
+                    , taxIncludedPrice = 1234
+                    , tax = 0
+                    , truncated = True
+                    }
+                        |> updateTaxRate 0.1
+                        |> .taxRate
+                        |> Expect.within (Absolute 0.0001) 0.1
             , test "total price : 1234 -> 10% tax" <|
                 \_ ->
                     { taxRate = 0
