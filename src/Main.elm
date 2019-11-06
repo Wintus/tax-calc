@@ -57,11 +57,7 @@ update : Msg -> Model -> Model
 update msg model =
     let
         float =
-            if model.truncated then
-                truncateFloat
-
-            else
-                identity
+            truncation model
     in
     case msg of
         ChangeTaxRate s ->
@@ -98,15 +94,19 @@ truncateFloat =
     truncate >> toFloat
 
 
+truncation { truncated } =
+    if truncated then
+        truncateFloat
+
+    else
+        identity
+
+
 updateTaxExcludedPrice : Float -> Model -> Model
 updateTaxExcludedPrice price model =
     let
         float =
-            if model.truncated then
-                truncateFloat
-
-            else
-                identity
+            truncation model
 
         tax =
             price * model.taxRate
@@ -122,11 +122,7 @@ updateTaxIncludedPrice : Float -> Model -> Model
 updateTaxIncludedPrice price model =
     let
         float =
-            if model.truncated then
-                truncateFloat
-
-            else
-                identity
+            truncation model
 
         rate =
             model.taxRate
@@ -145,11 +141,7 @@ updateTaxRate : Float -> Model -> Model
 updateTaxRate taxRate model =
     let
         float =
-            if model.truncated then
-                truncateFloat
-
-            else
-                identity
+            truncation model
 
         price =
             model.taxExcludedPrice
@@ -168,11 +160,7 @@ updateTruncation : Bool -> Model -> Model
 updateTruncation truncated model =
     let
         float =
-            if truncated then
-                truncateFloat
-
-            else
-                identity
+            truncation model
     in
     { model
         | truncated = truncated
