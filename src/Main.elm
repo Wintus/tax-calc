@@ -25,8 +25,8 @@ main =
 
 type alias Model =
     { taxRate : Float
-    , priceBeforeTax : Float
-    , priceWithTax : Float
+    , taxExcludedPrice : Float
+    , taxIncludedPrice : Float
     , tax : Float
     , truncated : Bool
     }
@@ -35,8 +35,8 @@ type alias Model =
 init : Model
 init =
     { taxRate = 0.08
-    , priceBeforeTax = 0
-    , priceWithTax = 0
+    , taxExcludedPrice = 0
+    , taxIncludedPrice = 0
     , tax = 0
     , truncated = True
     }
@@ -47,8 +47,8 @@ init =
 
 
 type Msg
-    = ChangePriceBeforeTax String
-    | ChangePriceWithTax String
+    = ChangeTaxExcludedPrice String
+    | ChangeTaxIncludedPrice String
     | ChangeTruncated Bool
 
 
@@ -63,7 +63,7 @@ update msg model =
                 identity
     in
     case msg of
-        ChangePriceBeforeTax s ->
+        ChangeTaxExcludedPrice s ->
             let
                 price =
                     s |> parseFloat |> float
@@ -72,12 +72,12 @@ update msg model =
                     price * model.taxRate
             in
             { model
-                | priceBeforeTax = price
-                , priceWithTax = price + tax |> float
+                | taxExcludedPrice = price
+                , taxIncludedPrice = price + tax |> float
                 , tax = tax
             }
 
-        ChangePriceWithTax s ->
+        ChangeTaxIncludedPrice s ->
             let
                 price =
                     s |> parseFloat |> float
@@ -89,16 +89,16 @@ update msg model =
                     price * rate / (1 + rate)
             in
             { model
-                | priceWithTax = price
-                , priceBeforeTax = price - tax |> float
+                | taxIncludedPrice = price
+                , taxExcludedPrice = price - tax |> float
                 , tax = tax
             }
 
         ChangeTruncated flag ->
             { model
                 | truncated = flag
-                , priceWithTax = model.priceWithTax |> float
-                , priceBeforeTax = model.priceBeforeTax |> float
+                , taxIncludedPrice = model.taxIncludedPrice |> float
+                , taxExcludedPrice = model.taxExcludedPrice |> float
             }
 
 
@@ -124,7 +124,7 @@ updateTaxIncludedPrice price model =
             price * model.taxRate
     in
     { model
-        | priceWithTax = price + tax |> float
+        | taxIncludedPrice = price + tax |> float
         , tax = tax
     }
 
@@ -146,7 +146,7 @@ updateTaxExcludedPrice price model =
             price * rate / (1 + rate)
     in
     { model
-        | priceBeforeTax = price - tax |> float
+        | taxExcludedPrice = price - tax |> float
         , tax = tax
     }
 
@@ -162,13 +162,13 @@ updateTaxRate taxRate model =
                 identity
 
         price =
-            model.priceBeforeTax
+            model.taxExcludedPrice
 
         tax =
             price * taxRate
     in
     { model
-        | priceWithTax = price + tax |> float
+        | taxIncludedPrice = price + tax |> float
         , tax = tax
     }
 
@@ -201,8 +201,8 @@ view model =
                     , labeledNumberInput
                         "price-before-tax"
                         "税抜価格"
-                        [ value <| String.fromFloat model.priceBeforeTax
-                        , onInput ChangePriceBeforeTax
+                        [ value <| String.fromFloat model.taxExcludedPrice
+                        , onInput ChangeTaxExcludedPrice
                         ]
                     , labeledNumberInput
                         "tax"
@@ -213,8 +213,8 @@ view model =
                     , labeledNumberInput
                         "price-with-tax"
                         "税込価格"
-                        [ value <| String.fromFloat model.priceWithTax
-                        , onInput ChangePriceWithTax
+                        [ value <| String.fromFloat model.taxIncludedPrice
+                        , onInput ChangeTaxIncludedPrice
                         ]
                     , labeledCheckbox
                         "truncate"

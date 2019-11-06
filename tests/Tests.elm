@@ -24,19 +24,19 @@ suite =
             [ test "1234 + 8% tax = 1332" <|
                 \_ ->
                     { taxRate = 0.08
-                    , priceBeforeTax = 0
-                    , priceWithTax = 0
+                    , taxExcludedPrice = 0
+                    , taxIncludedPrice = 0
                     , tax = 0
                     , truncated = True
                     }
                         |> updateTaxIncludedPrice 1234
-                        |> .priceWithTax
+                        |> .taxIncludedPrice
                         |> Expect.equal 1332
             , test "8% tax of 1234 ~= 98.72" <|
                 \_ ->
                     { taxRate = 0.08
-                    , priceBeforeTax = 0
-                    , priceWithTax = 0
+                    , taxExcludedPrice = 0
+                    , taxIncludedPrice = 0
                     , tax = 0
                     , truncated = True
                     }
@@ -46,19 +46,19 @@ suite =
             , test "1234 - 8% tax = 1142" <|
                 \_ ->
                     { taxRate = 0.08
-                    , priceBeforeTax = 0
-                    , priceWithTax = 0
+                    , taxExcludedPrice = 0
+                    , taxIncludedPrice = 0
                     , tax = 0
                     , truncated = True
                     }
                         |> updateTaxExcludedPrice 1234
-                        |> .priceBeforeTax
+                        |> .taxExcludedPrice
                         |> Expect.equal 1142
             , test "8% tax of total 1234 ~= 91.41" <|
                 \_ ->
                     { taxRate = 0.08
-                    , priceBeforeTax = 0
-                    , priceWithTax = 0
+                    , taxExcludedPrice = 0
+                    , taxIncludedPrice = 0
                     , tax = 0
                     , truncated = True
                     }
@@ -68,19 +68,19 @@ suite =
             , test "total price : 1234 -> 10% tax" <|
                 \_ ->
                     { taxRate = 0
-                    , priceBeforeTax = 1234
-                    , priceWithTax = 1234
+                    , taxExcludedPrice = 1234
+                    , taxIncludedPrice = 1234
                     , tax = 0
                     , truncated = True
                     }
                         |> updateTaxRate 0.1
-                        |> .priceWithTax
+                        |> .taxIncludedPrice
                         |> Expect.equal 1357
             , test "tax : 1234 -> 10% tax" <|
                 \_ ->
                     { taxRate = 0
-                    , priceBeforeTax = 1234
-                    , priceWithTax = 1234
+                    , taxExcludedPrice = 1234
+                    , taxIncludedPrice = 1234
                     , tax = 0
                     , truncated = True
                     }
