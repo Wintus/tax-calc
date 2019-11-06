@@ -67,39 +67,18 @@ update msg model =
             let
                 price =
                     s |> parseFloat |> float
-
-                tax =
-                    price * model.taxRate
             in
-            { model
-                | taxExcludedPrice = price
-                , taxIncludedPrice = price + tax |> float
-                , tax = tax
-            }
+            updateTaxExcludedPrice price model
 
         ChangeTaxIncludedPrice s ->
             let
                 price =
                     s |> parseFloat |> float
-
-                rate =
-                    model.taxRate
-
-                tax =
-                    price * rate / (1 + rate)
             in
-            { model
-                | taxIncludedPrice = price
-                , taxExcludedPrice = price - tax |> float
-                , tax = tax
-            }
+            updateTaxIncludedPrice price model
 
-        ChangeTruncated flag ->
-            { model
-                | truncated = flag
-                , taxIncludedPrice = model.taxIncludedPrice |> float
-                , taxExcludedPrice = model.taxExcludedPrice |> float
-            }
+        ChangeTruncated truncated ->
+            updateTruncation truncated model
 
 
 parseFloat s =
