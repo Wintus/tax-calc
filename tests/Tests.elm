@@ -21,45 +21,45 @@ suite =
         , test "1234 + 8% tax = 1332 (truncated)" <|
             \_ ->
                 { taxRate = 0.08
-                , priceBeforeTax = 1234
+                , priceBeforeTax = 0
                 , priceWithTax = 0
                 , tax = 0
                 , truncated = True
                 }
-                    |> updateTaxIncludedPrice
+                    |> updateTaxIncludedPrice 1234
                     |> .priceWithTax
                     |> Expect.equal 1332
         , test "8% tax of 1234 ~= 98.72" <|
             \_ ->
                 { taxRate = 0.08
-                , priceBeforeTax = 1234
+                , priceBeforeTax = 0
                 , priceWithTax = 0
                 , tax = 0
                 , truncated = True
                 }
-                    |> updateTaxIncludedPrice
+                    |> updateTaxIncludedPrice 1234
                     |> .tax
                     |> Expect.within (Absolute 0.01) 98.72
         , test "1234 - 8% tax = 1142 (truncated)" <|
             \_ ->
                 { taxRate = 0.08
                 , priceBeforeTax = 0
-                , priceWithTax = 1234
+                , priceWithTax = 0
                 , tax = 0
                 , truncated = True
                 }
-                    |> updateTaxExcludedPrice
+                    |> updateTaxExcludedPrice 1234
                     |> .priceBeforeTax
                     |> Expect.equal 1142
         , test "8% tax of total 1234 ~= 91.41" <|
             \_ ->
                 { taxRate = 0.08
                 , priceBeforeTax = 0
-                , priceWithTax = 1234
+                , priceWithTax = 0
                 , tax = 0
                 , truncated = True
                 }
-                    |> updateTaxExcludedPrice
+                    |> updateTaxExcludedPrice 1234
                     |> .tax
                     |> Expect.within (Absolute 0.01) 91.41
         , test "total price (truncated) : 1234 -> 10% tax" <|

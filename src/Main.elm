@@ -110,8 +110,8 @@ truncateFloat =
     truncate >> toFloat
 
 
-updateTaxIncludedPrice : Model -> Model
-updateTaxIncludedPrice model =
+updateTaxIncludedPrice : Float -> Model -> Model
+updateTaxIncludedPrice price model =
     let
         float =
             if model.truncated then
@@ -119,9 +119,6 @@ updateTaxIncludedPrice model =
 
             else
                 identity
-
-        price =
-            model.priceBeforeTax
 
         tax =
             price * model.taxRate
@@ -132,8 +129,8 @@ updateTaxIncludedPrice model =
     }
 
 
-updateTaxExcludedPrice : Model -> Model
-updateTaxExcludedPrice model =
+updateTaxExcludedPrice : Float -> Model -> Model
+updateTaxExcludedPrice price model =
     let
         float =
             if model.truncated then
@@ -144,9 +141,6 @@ updateTaxExcludedPrice model =
 
         rate =
             model.taxRate
-
-        price =
-            model.priceWithTax
 
         tax =
             price * rate / (1 + rate)
