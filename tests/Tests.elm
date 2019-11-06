@@ -18,7 +18,7 @@ suite =
                 1.23
                     |> truncateFloat
                     |> Expect.within (Absolute 0.0001) 1.0
-        , todo "unit price + tax"
+        , todo "1234 + 8% tax = 1332 (truncated)"
         , todo "total price - tax"
         , todo "fuzz unit price"
         ]
