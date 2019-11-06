@@ -1,9 +1,14 @@
 module Tests exposing (..)
 
 import Expect exposing (FloatingPointTolerance(..))
-import Fuzz exposing (float)
+import Fuzz exposing (float, floatRange, map)
 import Main exposing (parseFloat, truncateFloat, updateTaxExcludedPrice, updateTaxIncludedPrice, updateTaxRate, updateTruncation)
 import Test exposing (..)
+
+
+rounded =
+    floatRange 0 1.0e9
+        |> map truncateFloat
 
 
 suite : Test
@@ -121,7 +126,25 @@ suite =
                         |> updateTruncation True
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1234
-            , todo "fuzz unit price"
+            , fuzz rounded "unit price -> total price -> unit price is idempotent" <|
+                \price ->
+                    let
+                        model =
+                            updateTaxExcludedPrice price
+                                { taxRate = 0.08
+                                , taxExcludedPrice = 0
+                                , taxIncludedPrice = 0
+                                , tax = 0
+                                , truncated = True
+                                }
+
+                        unitPrice =
+                            model.taxExcludedPrice
+                    in
+                    model
+                        |> updateTaxIncludedPrice model.taxIncludedPrice
+                        |> .taxExcludedPrice
+                        |> Expect.within (Absolute 1) unitPrice
             , fuzz float "truncate twice is idempotent" <|
                 \n ->
                     let
