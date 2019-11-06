@@ -29,7 +29,7 @@ suite =
                     , tax = 0
                     , truncated = True
                     }
-                        |> updateTaxIncludedPrice 1234
+                        |> updateTaxExcludedPrice 1234
                         |> .taxIncludedPrice
                         |> Expect.equal 1332
             , test "8% tax of 1234 ~= 98.72" <|
@@ -40,7 +40,7 @@ suite =
                     , tax = 0
                     , truncated = True
                     }
-                        |> updateTaxIncludedPrice 1234
+                        |> updateTaxExcludedPrice 1234
                         |> .tax
                         |> Expect.within (Absolute 0.01) 98.72
             , test "1234 - 8% tax = 1142" <|
@@ -51,7 +51,7 @@ suite =
                     , tax = 0
                     , truncated = True
                     }
-                        |> updateTaxExcludedPrice 1234
+                        |> updateTaxIncludedPrice 1234
                         |> .taxExcludedPrice
                         |> Expect.equal 1142
             , test "8% tax of total 1234 ~= 91.41" <|
@@ -62,7 +62,7 @@ suite =
                     , tax = 0
                     , truncated = True
                     }
-                        |> updateTaxExcludedPrice 1234
+                        |> updateTaxIncludedPrice 1234
                         |> .tax
                         |> Expect.within (Absolute 0.01) 91.41
             , test "total price : 1234 -> 10% tax" <|
