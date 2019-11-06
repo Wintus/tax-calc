@@ -157,6 +157,28 @@ updateTaxExcludedPrice model =
     }
 
 
+updateTaxRate : Float -> Model -> Model
+updateTaxRate taxRate model =
+    let
+        float =
+            if model.truncated then
+                truncateFloat
+
+            else
+                identity
+
+        price =
+            model.priceBeforeTax
+
+        tax =
+            price * taxRate
+    in
+    { model
+        | priceWithTax = price + tax |> float
+        , tax = tax
+    }
+
+
 
 ---- VIEW ----
 
