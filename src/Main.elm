@@ -173,6 +173,23 @@ updateTaxRate taxRate model =
     }
 
 
+updateTruncation : Bool -> Model -> Model
+updateTruncation truncated model =
+    let
+        float =
+            if truncated then
+                truncateFloat
+
+            else
+                identity
+    in
+    { model
+        | truncated = truncated
+        , taxIncludedPrice = model.taxIncludedPrice |> float
+        , taxExcludedPrice = model.taxExcludedPrice |> float
+    }
+
+
 
 ---- VIEW ----
 

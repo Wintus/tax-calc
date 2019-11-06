@@ -1,7 +1,7 @@
 module Tests exposing (..)
 
 import Expect exposing (FloatingPointTolerance(..))
-import Main exposing (parseFloat, truncateFloat, updateTaxExcludedPrice, updateTaxIncludedPrice, updateTaxRate)
+import Main exposing (parseFloat, truncateFloat, updateTaxExcludedPrice, updateTaxIncludedPrice, updateTaxRate, updateTruncation)
 import Test exposing (..)
 
 
@@ -87,6 +87,52 @@ suite =
                         |> updateTaxRate 0.1
                         |> .tax
                         |> Expect.within (Absolute 0.01) 123.4
+            , test "disable truncate tax-excluded" <|
+                \_ ->
+                    { taxRate = 0
+                    , taxExcludedPrice = 1234
+                    , taxIncludedPrice = 1234
+                    , tax = 0
+                    , truncated = True
+                    }
+                        |> updateTruncation True
+                        |> .taxExcludedPrice
+                        |> Expect.within (Absolute 0.01) 1234
+            , test "disable truncate tax-included" <|
+                \_ ->
+                    { taxRate = 0
+                    , taxExcludedPrice = 1234
+                    , taxIncludedPrice = 1234
+                    , tax = 0
+                    , truncated = True
+                    }
+                        |> updateTruncation True
+                        |> .taxIncludedPrice
+                        |> Expect.within (Absolute 0.01) 1234
             , todo "fuzz unit price"
+            ]
+        , describe "not-truncated"
+            [ test "truncate tax-excluded" <|
+                \_ ->
+                    { taxRate = 0
+                    , taxExcludedPrice = 1234.56
+                    , taxIncludedPrice = 1234.56
+                    , tax = 0
+                    , truncated = True
+                    }
+                        |> updateTruncation True
+                        |> .taxExcludedPrice
+                        |> Expect.within (Absolute 0.01) 1234
+            , test "truncate tax-included" <|
+                \_ ->
+                    { taxRate = 0
+                    , taxExcludedPrice = 1234.56
+                    , taxIncludedPrice = 1234.56
+                    , tax = 0
+                    , truncated = True
+                    }
+                        |> updateTruncation True
+                        |> .taxIncludedPrice
+                        |> Expect.within (Absolute 0.01) 1234
             ]
         ]
