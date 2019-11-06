@@ -160,7 +160,11 @@ updateTruncation : Bool -> Model -> Model
 updateTruncation truncated model =
     let
         float =
-            truncation model
+            if truncated then
+                truncateFloat
+
+            else
+                identity
     in
     { model
         | truncated = truncated
