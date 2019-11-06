@@ -1,7 +1,7 @@
 module Tests exposing (..)
 
 import Expect exposing (FloatingPointTolerance(..))
-import Main exposing (parseFloat, truncateFloat, updateTaxIncludedPrice)
+import Main exposing (parseFloat, truncateFloat, updateTaxExcludedPrice, updateTaxIncludedPrice)
 import Test exposing (..)
 
 
@@ -40,6 +40,27 @@ suite =
                     |> updateTaxIncludedPrice
                     |> .tax
                     |> Expect.within (Absolute 0.01) 98.72
-        , todo "total price - tax"
+        , test "1234 - 8% tax = 1142 (truncated)" <|
+            \_ ->
+                { taxRate = 0.08
+                , priceBeforeTax = 0
+                , priceWithTax = 1234
+                , tax = 0
+                , truncated = True
+                }
+                    |> updateTaxExcludedPrice
+                    |> .priceBeforeTax
+                    |> Expect.equal 1142
+        , test "8% tax of total 1234 ~= 91.41" <|
+            \_ ->
+                { taxRate = 0.08
+                , priceBeforeTax = 0
+                , priceWithTax = 1234
+                , tax = 0
+                , truncated = True
+                }
+                    |> updateTaxExcludedPrice
+                    |> .tax
+                    |> Expect.within (Absolute 0.01) 91.41
         , todo "fuzz unit price"
         ]
