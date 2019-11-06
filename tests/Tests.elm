@@ -112,7 +112,10 @@ suite =
             , todo "fuzz unit price"
             ]
         , describe "not-truncated"
-            [ test "truncate tax-excluded" <|
+            [ todo "tax-excluded"
+            , todo "tax-included"
+            , todo "tax rate"
+            , test "truncate tax-excluded" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234.56
