@@ -110,6 +110,28 @@ truncateFloat =
     truncate >> toFloat
 
 
+updateTaxIncludedPrice : Model -> Model
+updateTaxIncludedPrice model =
+    let
+        float =
+            if model.truncated then
+                truncateFloat
+
+            else
+                identity
+
+        price =
+            model.priceBeforeTax
+
+        tax =
+            price * model.taxRate
+    in
+    { model
+        | priceWithTax = price + tax |> float
+        , tax = tax
+    }
+
+
 
 ---- VIEW ----
 
