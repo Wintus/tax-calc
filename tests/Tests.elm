@@ -248,7 +248,7 @@ suite =
                     , taxExcludedPrice = 1234.56
                     , taxIncludedPrice = 1234.56
                     , tax = 0
-                    , truncated = True
+                    , truncated = False
                     }
                         |> updateTruncation True
                         |> .taxExcludedPrice
@@ -259,7 +259,7 @@ suite =
                     , taxExcludedPrice = 1234.56
                     , taxIncludedPrice = 1234.56
                     , tax = 0
-                    , truncated = True
+                    , truncated = False
                     }
                         |> updateTruncation True
                         |> .taxIncludedPrice
