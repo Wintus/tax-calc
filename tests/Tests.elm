@@ -130,13 +130,13 @@ suite =
                 \price ->
                     let
                         model =
-                            updateTaxExcludedPrice price
-                                { taxRate = 0.08
-                                , taxExcludedPrice = 0
-                                , taxIncludedPrice = 0
-                                , tax = 0
-                                , truncated = True
-                                }
+                            { taxRate = 0.08
+                            , taxExcludedPrice = 0
+                            , taxIncludedPrice = 0
+                            , tax = 0
+                            , truncated = True
+                            }
+                                |> updateTaxExcludedPrice price
 
                         unitPrice =
                             model.taxExcludedPrice
