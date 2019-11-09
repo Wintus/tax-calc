@@ -71,7 +71,7 @@ suite =
                         |> updateTaxIncludedPrice 1234
                         |> .tax
                         |> Expect.within (Absolute 0.01) 91.41
-            , test "tax rate -> 10%" <|
+            , test "tax-excluded price of updated tax rate is same" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -80,8 +80,8 @@ suite =
                     , truncated = True
                     }
                         |> updateTaxRate 0.1
-                        |> .taxRate
-                        |> Expect.within (Absolute 0.0001) 0.1
+                        |> .taxExcludedPrice
+                        |> Expect.within (Absolute 0.1) 1234
             , test "tax-included price of updated tax rate" <|
                 \_ ->
                     { taxRate = 0
@@ -209,7 +209,7 @@ suite =
                         |> updateTaxIncludedPrice 1234
                         |> .tax
                         |> Expect.within (Absolute 0.01) 91.41
-            , test "tax rate -> 10%" <|
+            , test "tax-excluded price of updated tax rate is same" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -218,8 +218,8 @@ suite =
                     , truncated = False
                     }
                         |> updateTaxRate 0.1
-                        |> .taxRate
-                        |> Expect.within (Absolute 0.0001) 0.1
+                        |> .taxExcludedPrice
+                        |> Expect.within (Absolute 0.1) 1234
             , test "tax-included price of updated tax rate" <|
                 \_ ->
                     { taxRate = 0
