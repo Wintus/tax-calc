@@ -264,5 +264,24 @@ suite =
                         |> updateTruncation True
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1234
+            , fuzz rounded "update unit price -> total price -> unit price is diff in 1" <|
+                \price ->
+                    let
+                        model =
+                            { taxRate = 0.08
+                            , taxExcludedPrice = 0
+                            , taxIncludedPrice = 0
+                            , tax = 0
+                            , truncated = False
+                            }
+                                |> updateTaxExcludedPrice price
+
+                        unitPrice =
+                            model.taxExcludedPrice
+                    in
+                    model
+                        |> updateTaxIncludedPrice model.taxIncludedPrice
+                        |> .taxExcludedPrice
+                        |> Expect.within (Absolute 1) unitPrice
             ]
         ]
