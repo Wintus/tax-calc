@@ -27,7 +27,7 @@ suite =
                         |> Expect.within (Absolute 0.0001) 1.0
             ]
         , describe "truncated price"
-            [ test "1234 + 8% tax = 1332" <|
+            [ test "tax-included price of updated tax-excluded price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -38,7 +38,7 @@ suite =
                         |> updateTaxExcludedPrice 1234
                         |> .taxIncludedPrice
                         |> Expect.equal 1332
-            , test "8% tax of 1234 ~= 98.72" <|
+            , test "tax of updated tax-excluded price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -49,7 +49,7 @@ suite =
                         |> updateTaxExcludedPrice 1234
                         |> .tax
                         |> Expect.within (Absolute 0.01) 98.72
-            , test "1234 - 8% tax = 1142" <|
+            , test "tax-excluded price of updated tax-included price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -60,7 +60,7 @@ suite =
                         |> updateTaxIncludedPrice 1234
                         |> .taxExcludedPrice
                         |> Expect.equal 1142
-            , test "8% tax of total 1234 ~= 91.41" <|
+            , test "tax of updated tax-included price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -82,7 +82,7 @@ suite =
                         |> updateTaxRate 0.1
                         |> .taxRate
                         |> Expect.within (Absolute 0.0001) 0.1
-            , test "total price : 1234 -> 10% tax" <|
+            , test "tax-included price of updated tax rate" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -93,7 +93,7 @@ suite =
                         |> updateTaxRate 0.1
                         |> .taxIncludedPrice
                         |> Expect.equal 1357
-            , test "tax : 1234 -> 10% tax" <|
+            , test "tax of updated tax rate" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -104,7 +104,7 @@ suite =
                         |> updateTaxRate 0.1
                         |> .tax
                         |> Expect.within (Absolute 0.01) 123.4
-            , test "disable truncate tax-excluded" <|
+            , test "tax-excluded price of non-truncated is same" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -115,7 +115,7 @@ suite =
                         |> updateTruncation False
                         |> .taxExcludedPrice
                         |> Expect.within (Absolute 0.01) 1234
-            , test "disable truncate tax-included" <|
+            , test "tax-included price of non-truncated is same" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -126,7 +126,7 @@ suite =
                         |> updateTruncation False
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1234
-            , fuzz rounded "unit price -> total price -> unit price is diff < 1" <|
+            , fuzz rounded "update unit price -> total price -> unit price is diff in 1" <|
                 \price ->
                     let
                         model =
@@ -165,7 +165,7 @@ suite =
                         |> Expect.equal model
             ]
         , describe "not-truncated"
-            [ test "1234 + 8% tax = 1332.72" <|
+            [ test "tax-included price of updated tax-excluded price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -176,7 +176,7 @@ suite =
                         |> updateTaxExcludedPrice 1234
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1332.72
-            , test "8% tax of 1234 ~= 98.72" <|
+            , test "tax of updated tax-excluded price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -187,7 +187,7 @@ suite =
                         |> updateTaxExcludedPrice 1234
                         |> .tax
                         |> Expect.within (Absolute 0.01) 98.72
-            , test "1234 - 8% tax = 1142.60" <|
+            , test "tax-excluded price of updated tax-included price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -198,7 +198,7 @@ suite =
                         |> updateTaxIncludedPrice 1234
                         |> .taxExcludedPrice
                         |> Expect.within (Absolute 0.01) 1142.6
-            , test "8% tax of total 1234 ~= 91.41" <|
+            , test "tax of updated tax-included price" <|
                 \_ ->
                     { taxRate = 0.08
                     , taxExcludedPrice = 0
@@ -220,7 +220,7 @@ suite =
                         |> updateTaxRate 0.1
                         |> .taxRate
                         |> Expect.within (Absolute 0.0001) 0.1
-            , test "total price : 1234 -> 10% tax" <|
+            , test "tax-included price of updated tax rate" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -231,7 +231,7 @@ suite =
                         |> updateTaxRate 0.1
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1357.4
-            , test "tax : 1234 -> 10% tax" <|
+            , test "tax of updated tax rate" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234
@@ -242,7 +242,7 @@ suite =
                         |> updateTaxRate 0.1
                         |> .tax
                         |> Expect.within (Absolute 0.01) 123.4
-            , test "truncate tax-excluded" <|
+            , test "tax-excluded price of truncated" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234.56
@@ -253,7 +253,7 @@ suite =
                         |> updateTruncation True
                         |> .taxExcludedPrice
                         |> Expect.within (Absolute 0.01) 1234
-            , test "truncate tax-included" <|
+            , test "tax-included price of truncated" <|
                 \_ ->
                     { taxRate = 0
                     , taxExcludedPrice = 1234.56
