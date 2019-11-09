@@ -1,11 +1,15 @@
 {
-  "main.css": "/tax-calc/static/css/main.e3444815.chunk.css",
-  "main.js": "/tax-calc/static/js/main.67a0db64.chunk.js",
-  "main.css.map": "/tax-calc/static/css/main.e3444815.chunk.css.map",
-  "main.js.map": "/tax-calc/static/js/main.67a0db64.chunk.js.map",
-  "runtime~main.js": "/tax-calc/static/js/runtime~main.2b9ea8c8.js",
-  "runtime~main.js.map": "/tax-calc/static/js/runtime~main.2b9ea8c8.js.map",
+  "main.css": "/tax-calc/static/css/main.fc26b396.chunk.css",
+  "main.js": "/tax-calc/static/js/main.c447e3a1.chunk.js",
+  "main.js.map": "/tax-calc/static/js/main.c447e3a1.chunk.js.map",
+  "runtime~main.js": "/tax-calc/static/js/runtime~main.74c60d46.js",
+  "runtime~main.js.map": "/tax-calc/static/js/runtime~main.74c60d46.js.map",
   "vendors~main.js": "/tax-calc/static/js/vendors~main.3ca81432.chunk.js",
   "vendors~main.js.map": "/tax-calc/static/js/vendors~main.3ca81432.chunk.js.map",
-  "index.html": "/tax-calc/index.html"
+  "./service-worker.js": "/tax-calc/./service-worker.js",
+  "favicon.ico": "/tax-calc/favicon.ico",
+  "index.html": "/tax-calc/index.html",
+  "logo.svg": "/tax-calc/logo.svg",
+  "manifest.json": "/tax-calc/manifest.json",
+  "precache-manifest.a35a8ecba0557b046278d75e91cb0efd.js": "/tax-calc/precache-manifest.a35a8ecba0557b046278d75e91cb0efd.js"
 }
