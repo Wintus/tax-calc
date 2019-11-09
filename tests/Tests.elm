@@ -112,7 +112,7 @@ suite =
                     , tax = 0
                     , truncated = True
                     }
-                        |> updateTruncation True
+                        |> updateTruncation False
                         |> .taxExcludedPrice
                         |> Expect.within (Absolute 0.01) 1234
             , test "disable truncate tax-included" <|
@@ -123,7 +123,7 @@ suite =
                     , tax = 0
                     , truncated = True
                     }
-                        |> updateTruncation True
+                        |> updateTruncation False
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1234
             , fuzz rounded "unit price -> total price -> unit price is diff < 1" <|
