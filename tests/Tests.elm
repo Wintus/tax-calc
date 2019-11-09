@@ -225,60 +225,60 @@ suite =
                 [ test "tax-excluded price is same" <|
                     \_ ->
                         { taxRate = 0
-                        , taxExcludedPrice = 1234
-                        , taxIncludedPrice = 1234
+                        , taxExcludedPrice = 1234.56
+                        , taxIncludedPrice = 1234.56
                         , tax = 0
                         , truncated = False
                         }
                             |> updateTaxRate 0.1
                             |> .taxExcludedPrice
-                            |> Expect.within (Absolute 0.1) 1234
+                            |> Expect.within (Absolute 0.01) 1234.56
                 , test "tax-included price" <|
                     \_ ->
                         { taxRate = 0
-                        , taxExcludedPrice = 1234
-                        , taxIncludedPrice = 1234
+                        , taxExcludedPrice = 1234.56
+                        , taxIncludedPrice = 1234.56
                         , tax = 0
                         , truncated = False
                         }
                             |> updateTaxRate 0.1
                             |> .taxIncludedPrice
-                            |> Expect.within (Absolute 0.01) 1357.4
+                            |> Expect.within (Absolute 0.01) 1358.02
                 , test "tax" <|
                     \_ ->
                         { taxRate = 0
-                        , taxExcludedPrice = 1234
-                        , taxIncludedPrice = 1234
+                        , taxExcludedPrice = 1234.56
+                        , taxIncludedPrice = 1234.56
                         , tax = 0
                         , truncated = False
                         }
                             |> updateTaxRate 0.1
                             |> .tax
-                            |> Expect.within (Absolute 0.01) 123.4
+                            |> Expect.within (Absolute 0.01) 123.456
                 ]
             , describe "un-truncate"
                 [ test "tax-excluded price is same" <|
                     \_ ->
                         { taxRate = 0
-                        , taxExcludedPrice = 1234
-                        , taxIncludedPrice = 1234
+                        , taxExcludedPrice = 1234.56
+                        , taxIncludedPrice = 1234.56
                         , tax = 0
                         , truncated = False
                         }
                             |> updateTruncation False
                             |> .taxExcludedPrice
-                            |> Expect.within (Absolute 0.01) 1234
+                            |> Expect.within (Absolute 0.01) 1234.56
                 , test "tax-included price is same" <|
                     \_ ->
                         { taxRate = 0
-                        , taxExcludedPrice = 1234
-                        , taxIncludedPrice = 1234
+                        , taxExcludedPrice = 1234.56
+                        , taxIncludedPrice = 1234.56
                         , tax = 0
                         , truncated = False
                         }
                             |> updateTruncation False
                             |> .taxIncludedPrice
-                            |> Expect.within (Absolute 0.01) 1234
+                            |> Expect.within (Absolute 0.01) 1234.56
                 ]
             , fuzz rounded "update unit price -> total price -> unit price is diff in 1" <|
                 \price ->
