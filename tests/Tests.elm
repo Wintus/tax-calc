@@ -126,7 +126,7 @@ suite =
                         |> updateTruncation True
                         |> .taxIncludedPrice
                         |> Expect.within (Absolute 0.01) 1234
-            , fuzz rounded "unit price -> total price -> unit price is idempotent" <|
+            , fuzz rounded "unit price -> total price -> unit price is diff < 1" <|
                 \price ->
                     let
                         model =
