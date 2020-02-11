@@ -1,0 +1,14 @@
+{
+  "name": "tax-calc",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/Wintus/tax-calc.git",
+  "author": "wintus <yuya0726+GitHub@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "elm-app build"
+  },
+  "devDependencies": {
+    "create-elm-app": "^4.2.1"
+  }
+}
