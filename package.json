@@ -9,6 +9,6 @@
     "build": "elm-app build"
   },
   "devDependencies": {
-    "create-elm-app": "^4.2.1"
+    "create-elm-app": "^5.22.0"
   }
 }
